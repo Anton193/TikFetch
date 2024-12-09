@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unduh Video TikTok Gratis - TikFetch</title>
+    <meta name="description" content="Unduh video TikTok dengan cepat dan mudah tanpa watermark menggunakan TikFetch. Gratis, cepat, dan tanpa batas!">
+    <meta name="keywords" content="TikFetch, tikfetch, tik fetch, unduh video tiktok, download video tiktok, tiktok downloader, tanpa watermark, unduh video gratis">
+   <meta property="og:title" content="Unduh Video TikTok Gratis - TikFetch">
+    <meta property="og:description" content="Unduh video TikTok dengan cepat dan mudah tanpa watermark menggunakan TikFetch. Gratis, cepat, dan tanpa batas!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://namadomainkamu.com/">
+    <meta property="og:image" content="https://namadomainkamu.com/assets/preview.jpg">
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <meta property="og:image" content="./images/logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/st.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <p>Dibuat oleh <a href="https://github.com/AntonThomz" target="_blank">Anton Thomz</a>.</p>
+            <p>Sumber data: <a href="/api/tiktok" target="_blank">API AlphaCoder</a>.</p>
+        </div>
+        <form id="downloadForm">
+            <div class="search-box">
+                <input type="text" id="url" placeholder="" required>
+                <button type="submit">
+                    <i></i>GET
+                </button>
+            </div>
+        </form>
+        <div id="error"></div>      
+        <div id="result-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer" controls></video>
+            </div>
+            <div class="download-options">
+                <a id="downloadMP4" class="download-button" href="#" download>Unduh MP4</a>
+                <a id="downloadMP3" class="download-button" href="#" download>Unduh MP3</a>
+            </div>
+        </div>
+    </div>
+    <script src="./js/st.js"></script>
+    <script src="./js/autoketik.js"></script>
+</body>
+</html>
