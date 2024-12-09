@@ -4,14 +4,20 @@ const detectBot = (userAgent) => {
     return knownBots.test(userAgent) && !allowedBots.test(userAgent);
 };
 
-module.exports = (req, res, next) => {
+module.exports = (req, res) => {
     const userAgent = req.headers['user-agent'] || '';
     const requestPath = req.originalUrl || req.url;
-    if (/googlebot|bingbot|duckduckbot|baiduspider|yandexbot/i.test(userAgent)) return next();
-    if (requestPath.startsWith('/api/tiktok')) return next();
-    if (detectBot(userAgent)) return res.status(403).send();
-       res.setHeader('X-Frame-Options', 'DENY');
-       res.setHeader('X-Content-Type-Options', 'nosniff');
-       res.setHeader('Cache-Control', 'no-cache, must-revalidate');
-    next();
+    if (/googlebot|bingbot|duckduckbot|baiduspider|yandexbot/i.test(userAgent)) {
+        return res.next();
+    }
+    if (requestPath.startsWith('/api/tiktok')) {
+        return res.next();
+    }
+    if (detectBot(userAgent)) {
+        return res.status(403).send('Tunggu 100 tahun lagi, sabar ya!');
+    }
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    return res.next();
 };
