@@ -12,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = urlInput.value.trim();
         if (!url) return showError('URL tidak boleh kosong');
         if (!tiktokUrlRegex.test(url)) return showError('Masukkan URL TikTok yang valid');
-
         try {
-            const videoData = await fetch(`/api/tiktok?url=${encodeURIComponent(url)}`)
-                .then(res => res.json());
+            const videoData = await fetch(`/api/tiktok?url=${encodeURIComponent(url)}`).then(res => res.json());
             if (videoData.status !== 'error') updateUI(videoData.video);
             else showError('Gagal memproses video.');
         } catch {
