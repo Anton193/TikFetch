@@ -1,3 +1,7 @@
+const axios = require('axios');
+const got = require('got');
+const qs = require('qs');
+const cheerio = require('cheerio');
 const { youtube } = require('btch-downloader');
 
 module.exports = async (req, res) => {
