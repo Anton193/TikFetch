@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "https://www.antoncodder.online/(.*)",
+      "status": 301,
+      "dest": "https://antoncodder.online/$1"
+    }
+  ]
+}
