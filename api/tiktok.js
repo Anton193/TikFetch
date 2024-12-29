@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
                                   album: data.music_info.album || '-'
                              },
                         },
-                        profile: data.author
+                        images: data.images
                     },
                     null,
                     2
