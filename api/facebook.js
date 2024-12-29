@@ -1,20 +1,12 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
-const cookie = require("cookie");
-const fetch = require("fetch");
-const nodeFetch = require("node-fetch");
-const publish = require("publish");
-const qs = require("qs");
-const request = require("request");
-const url = require("url");
-const { scraper } = require("@bochilteam/scraper");
-const ytSearch = require("yt-search");
-const ytdlCore = require("ytdl-core");
-const dylux = require("api-dylux");
+const axios = require('axios');
+const got = require('got');
+const qs = require('qs');
+const cheerio = require('cheerio');
+const { fbdl } = require('btch-downloader');
 
 module.exports = async (req, res) => {
     const { apikey, url } = req.query;
-    if (apikey !== "AntonGanteng") {
+    if (apikey !== "AntonThomzz") {
         return res.end(
             JSON.stringify(
                 {
@@ -36,7 +28,7 @@ module.exports = async (req, res) => {
                     status: 'error',
                     errorCode: 'MISSING_URL',
                     timestamp: new Date().toISOString(),
-                    message: 'URL YouTube tidak diberikan.'
+                    message: 'URL Facebook tidak diberikan.'
                 },
                 null,
                 2
@@ -44,13 +36,16 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const datayt = await dylux.fbdl(url);
+        const data = await fbdl(url);
+        const result = data.HD || data.Normal_video || "-"
         return res.end(
             JSON.stringify(
                 {
                     status: 'success',
-                    owner: 'Anton',
-                    data: datayt.videoUrl || datayt
+                    owner: 'AntonThomzz',
+                    data: {
+                        url: result
+                    }
                 },
                 null,
                 2
