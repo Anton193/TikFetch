@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "axios": "latest",
-    "btch-downloader": "latest"
+    "axios": "^1.7.9",
+    "btch-downloader": "^2.8.3"
   }
 }
