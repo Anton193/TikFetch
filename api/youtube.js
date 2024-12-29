@@ -5,22 +5,7 @@ const cheerio = require('cheerio');
 const { youtube } = require('btch-downloader');
 
 module.exports = async (req, res) => {
-    const { apikey, url } = req.query;
-    if (apikey !== "AntonGanteng") {
-        return res.end(
-            JSON.stringify(
-                {
-                    status: 'error',
-                    errorCode: 'INVALID_API_KEY',
-                    message: 'API Key tidak valid.',
-                    timestamp: new Date().toISOString(),
-                    details: 'Periksa API Key yang Anda kirimkan dan pastikan itu benar.',
-                },
-                null,
-                2
-            )
-        );
-    }
+    const { url } = req.query;
     if (!url) {
         return res.end(
             JSON.stringify(

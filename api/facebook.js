@@ -2,25 +2,10 @@ const axios = require('axios');
 const got = require('got');
 const qs = require('qs');
 const cheerio = require('cheerio');
-const { fbdl } = require('btch-downloader');
+const { fbdown } = require('btch-downloader');
 
 module.exports = async (req, res) => {
-    const { apikey, url } = req.query;
-    if (apikey !== "AntonThomzz") {
-        return res.end(
-            JSON.stringify(
-                {
-                    status: 'error',
-                    errorCode: 'INVALID_API_KEY',
-                    message: 'API Key tidak valid.',
-                    timestamp: new Date().toISOString(),
-                    details: 'Periksa API Key yang Anda kirimkan dan pastikan itu benar.',
-                },
-                null,
-                2
-            )
-        );
-    }
+    const { url } = req.query;
     if (!url) {
         return res.end(
             JSON.stringify(
@@ -36,8 +21,8 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const data = await fbdl(url);
-        const result = data.HD || data.Normal_video || "-"
+        const data = await fbdown(url);
+        const result = data.HD || data.Normal_video || "-";
         return res.end(
             JSON.stringify(
                 {
