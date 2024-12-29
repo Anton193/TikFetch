@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "api-dylux": "^1.8.5",
     "axios": "^1.7.9",
     "btch-downloader": "^2.8.3"
   }
