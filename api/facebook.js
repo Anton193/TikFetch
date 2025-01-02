@@ -31,16 +31,8 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const data = await youtube(url);
-        return res.end(
-            JSON.stringify(
-                {
-                    data
-                },
-                null,
-                2
-            )
-        );
+        const data = await facebook(url);
+        return data;
     } catch (err) {
         return res.end(
             JSON.stringify(
