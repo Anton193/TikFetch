@@ -31,8 +31,27 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const data = await youtube(url);
-        return data;
+        const { data } = await youtube(url);
+        return res.end(
+            JSON.stringify(
+                {
+                    status: 200,
+                    owner: "AntonThomzz",
+                    Issues: "https://github.com/AntonThomz",
+                    data: {
+                        title: data.title,
+                        thumbnail: data.image,
+                        ago: data.ago,
+                        views: data.views,
+                        name: data.name,
+                        mp3: data.mp3,
+                        mp4: data.mp4
+                    }
+                },
+                null,
+                2
+            )
+        );
     } catch (err) {
         return res.end(
             JSON.stringify(

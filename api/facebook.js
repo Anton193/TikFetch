@@ -31,8 +31,22 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const data = await facebook(url);
-        return data;
+        const { data } = await facebook(url);
+        return res.end(
+            JSON.stringify(
+                {
+                    status: 200,
+                    owner: "AntonThomzz",
+                    Issues: "https://github.com/AntonThomz",
+                    data: {
+                        HD: data.HD,
+                        SD: data.SD
+                    }
+                },
+                null,
+                2
+            )
+        );
     } catch (err) {
         return res.end(
             JSON.stringify(
