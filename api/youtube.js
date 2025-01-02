@@ -1,11 +1,21 @@
-const axios = require('axios');
-const got = require('got');
-const qs = require('qs');
-const cheerio = require('cheerio');
-const { youtube } = require('btch-downloader');
+const { youtube } = require("./data/youtube/index");
 
 module.exports = async (req, res) => {
-    const { url } = req.query;
+    const { url, apikey } = req.query;
+    if (apikey !== "AntonThomzz") {
+        return res.end(
+            JSON.stringify(
+                {
+                    status: 'error',
+                    errorCode: 'APIKEY_IS_INVALID',
+                    timestamp: new Date().toISOString(),
+                    message: 'please try again later.'
+                },
+                null,
+                2
+            )
+        );
+    }
     if (!url) {
         return res.end(
             JSON.stringify(
@@ -13,7 +23,7 @@ module.exports = async (req, res) => {
                     status: 'error',
                     errorCode: 'MISSING_URL',
                     timestamp: new Date().toISOString(),
-                    message: 'URL YouTube tidak diberikan.'
+                    message: 'YouTube URL not provided'
                 },
                 null,
                 2
@@ -21,13 +31,11 @@ module.exports = async (req, res) => {
         );
     }
     try {
-        const datayt = await youtube(url);
+        const data = await youtube(url);
         return res.end(
             JSON.stringify(
                 {
-                    status: 'success',
-                    owner: 'Anton',
-                    data: datayt
+                    data
                 },
                 null,
                 2
@@ -39,8 +47,7 @@ module.exports = async (req, res) => {
                 {
                     status: "error",
                     errorCode: "SERVER_ERROR",
-                    message: "Terjadi kesalahan pada server.",
-                    details: err.message || err,
+                    mwssage: err.message || err,
                 },
                 null,
                 2
