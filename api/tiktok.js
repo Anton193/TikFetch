@@ -8,16 +8,15 @@ const {
 } = require("./data/utils");
 
 module.exports = async (req, res) => {
-    const { url, apikey } = req.query;
+    const params = req.method === 'POST' ? req.body : req.query;
+    const { url, apikey } = params;
     if (apikey !== "AntonThomzz") {
         return res.end(
             JSON.stringify(
                 {
                     status: 'error',
-                    errorCode: 'INVALID_API_KEY',
-                    message: 'API Key tidak valid.',
-                    timestamp: new Date().toISOString(),
-                    details: 'Pastikan Apikey Sudah Benar.',
+                    message: 'INVALID_API_KEY',
+                    timestamp: new Date().toISOString()
                 },
                 null,
                 2
@@ -29,9 +28,8 @@ module.exports = async (req, res) => {
             JSON.stringify(
                 {
                     status: 'error',
-                    errorCode: 'MISSING_URL',
-                    timestamp: new Date().toISOString(),
-                    message: 'URL TikTok tidak diberikan.'
+                    message: 'MISSING_URL',
+                    timestamp: new Date().toISOString()
                 },
                 null,
                 2
@@ -94,9 +92,7 @@ module.exports = async (req, res) => {
                 {
                     status: "error",
                     errorCode: "SERVER_ERROR",
-                    message: "Terjadi kesalahan pada server.",
-                    timestamp: new Date().toISOString(),
-                    details: err.message || err,
+                    message: err.message || err
                 },
                 null,
                 2
