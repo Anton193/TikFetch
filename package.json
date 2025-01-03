@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "axios": "latest",
-    "cheerio": "latest"
+    "cheerio": "latest",
+    "form-data": "latest",
+    "formidable": "latest",
+    "fs": "^0.0.1-security"
   }
 }
