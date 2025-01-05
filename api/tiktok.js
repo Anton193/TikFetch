@@ -8,21 +8,7 @@ const {
 } = require("./data/utils");
 
 module.exports = async (req, res) => {
-    const params = req.method === 'POST' ? req.body : req.query;
-    const { url, apikey } = params;
-    if (apikey !== "AntonThomzz") {
-        return res.end(
-            JSON.stringify(
-                {
-                    status: 'error',
-                    message: 'INVALID_API_KEY',
-                    timestamp: new Date().toISOString()
-                },
-                null,
-                2
-            )
-        );
-    }
+    const { url } = req.method === 'POST' ? req.body : req.query;
     if (!url) {
         return res.end(
             JSON.stringify(
@@ -50,9 +36,9 @@ module.exports = async (req, res) => {
             return res.end(
                 JSON.stringify(
                     {
-                        status: 'success',
-                        owner: 'Anton Thomzz',
-                        video: {
+                        status: 200,
+                        author: 'AntonThomzz',
+                        data: {
                              id: data.id,
                              title: data.title,
                              play: formatNumber(data.play_count),
