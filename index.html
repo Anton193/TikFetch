@@ -58,11 +58,12 @@
             </div>
         </div>
         <div class="d-flex justify-content-center mb-3">
-            <form id="downloadForm" class="input-group w-75 w-md-50">
+            <form id="downloadForm" class="input-group w-75 w-md-50" onsubmit="return validateCaptcha(event)">
                 <input type="text" id="url" class="form-control form-control-sm" placeholder="" required>
                 <button type="submit" id="submitBtn" class="btn btn-get btn-sm">
                     <i class="fas fa-search"></i> GET
                 </button>
+                <div class="g-recaptcha" data-sitekey="6LdfkK4qAAAAAC27zv04YzH8ZxNVfTf2mJ5QsSNB"></div>
             </form>
         </div>
         <div id="loading" class="text-center my-2" style="display: none;">
@@ -89,45 +90,55 @@
             </div>
         </div>
     </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./js/blank.js"></script>
     <script type="text/javascript" src="./js/autoketik.js"></script>
-   <script type="text/javascript">
-    const applyMode = (mode) => {
-        if (mode === 'dark') {
-            document.body.classList.add('bg-dark', 'text-white');
-            document.body.classList.remove('bg-light', 'text-dark');
-            toggleButton.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            document.body.classList.add('bg-light', 'text-dark');
-            document.body.classList.remove('bg-dark', 'text-white');
-            toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-        const elements = document.querySelectorAll('.text-light, .text-dark');
-        elements.forEach(el => {
+    <script type="text/javascript">
+        const applyMode = (mode) => {
             if (mode === 'dark') {
-                el.classList.add('text-light');
-                el.classList.remove('text-dark');
+                document.body.classList.add('bg-dark', 'text-white');
+                document.body.classList.remove('bg-light', 'text-dark');
+                toggleButton.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
-                el.classList.add('text-dark');
-                el.classList.remove('text-light');
+                document.body.classList.add('bg-light', 'text-dark');
+                document.body.classList.remove('bg-dark', 'text-white');
+                toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
             }
+            const elements = document.querySelectorAll('.text-light, .text-dark');
+            elements.forEach(el => {
+                if (mode === 'dark') {
+                    el.classList.add('text-light');
+                    el.classList.remove('text-dark');
+                } else {
+                    el.classList.add('text-dark');
+                    el.classList.remove('text-light');
+                }
+            });
+        };
+        const toggleButton = document.createElement('button');
+        toggleButton.classList.add('btn', 'btn-dark', 'btn-sm');
+        toggleButton.style.position = 'fixed';
+        toggleButton.style.bottom = '20px';
+        toggleButton.style.right = '20px';
+        toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+        document.body.appendChild(toggleButton);
+        const savedMode = localStorage.getItem('mode') || 'dark';
+        applyMode(savedMode);
+        toggleButton.addEventListener('click', () => {
+            const newMode = document.body.classList.contains('bg-dark') ? 'white' : 'dark';
+            localStorage.setItem('mode', newMode);
+            applyMode(newMode);
         });
-    };
-    const toggleButton = document.createElement('button');
-    toggleButton.classList.add('btn', 'btn-dark', 'btn-sm');
-    toggleButton.style.position = 'fixed';
-    toggleButton.style.bottom = '20px';
-    toggleButton.style.right = '20px';
-    toggleButton.innerHTML = '<i class="fas fa-moon"></i>';
-    document.body.appendChild(toggleButton);
-    const savedMode = localStorage.getItem('mode') || 'dark';
-    applyMode(savedMode);
-    toggleButton.addEventListener('click', () => {
-        const newMode = document.body.classList.contains('bg-dark') ? 'white' : 'dark';
-        localStorage.setItem('mode', newMode);
-        applyMode(newMode);
-    });
-</script>
+
+        function validateCaptcha(event) {
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length == 0) {
+                event.preventDefault();
+                alert("Please verify that you are not a robot.");
+            }
+        }
+    </script>
 </body>
 </html>
