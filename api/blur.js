@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
                     }, null, 2)
                 );
             }
-            const buffer = await sharp(req.file.path)
+            const buffer = await sharp(file.buffer)
                 .blur(5)
                 .toBuffer()
             const form = new FormData();
