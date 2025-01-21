@@ -39,6 +39,7 @@ module.exports = async (req, res) => {
                     }, null, 2)
                 );
             }
+            const base64Image = file.buffer.toString('base64');
             let apirnobg = [
                 'q61faXzzR5zNU6cvcrwtUkRU',
                 'S258diZhcuFJooAtHTaPEn4T',
@@ -49,8 +50,8 @@ module.exports = async (req, res) => {
                 'xp8pSDavAgfE5XScqXo9UKHF',
                 'dWbCoCb3TacCP93imNEcPxcL'
             ];
-            const { base64img } = await remobg.removeBackgroundFromImageFile({
-                path: file.path,
+            const { base64img } = await remobg.removeBackgroundFromImageBase64({
+                base64img: base64Image,
                 apiKey: apirnobg[Math.floor(Math.random() * apirnobg.length)],
                 size: 'auto',
                 type: 'auto',
@@ -74,7 +75,7 @@ module.exports = async (req, res) => {
                 },
             };
             const { data } = await axios.post('https://cloudmage.biz.id/upload.php', form, config);
-            if (buffer || data) {
+            if (data) {
                 return res.end(
                     JSON.stringify(
                         {
@@ -83,7 +84,7 @@ module.exports = async (req, res) => {
                             url: data.data.url || "None"
                         }, null, 2
                     )
-                )
+                );
             }
         } catch (error) {
             return res.end(
