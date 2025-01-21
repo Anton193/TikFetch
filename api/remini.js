@@ -2,7 +2,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
 const multer = require('multer');
-const upload = multer(); // tidak perlu menyimpan file lokal
+const upload = multer();
 
 const singleUpload = (req, res) => {
     return new Promise((resolve, reject) => {
@@ -39,16 +39,12 @@ module.exports = async (req, res) => {
                     }, null, 2)
                 );
             }
-
-            // Kirim file sebagai stream menggunakan FormData
             const formData = new FormData();
             formData.append("model_version", "1");
             formData.append("image", file.buffer, {
                 filename: 'anton.jpg',
                 contentType: 'image/jpeg',
             });
-
-            // POST ke API
             const response = await axios.post(
                 `https://inferenceengine.vyro.ai/enhance`,
                 formData,
@@ -62,8 +58,6 @@ module.exports = async (req, res) => {
                     responseType: 'arraybuffer',
                 }
             );
-
-            // Kirimkan hasil ke server lain (Cloudmage)
             const resultForm = new FormData();
             resultForm.append('image', response.data, {
                 filename: 'output-image.png',
@@ -82,7 +76,6 @@ module.exports = async (req, res) => {
                 },
             };
             const { data } = await axios.post('https://cloudmage.biz.id/upload.php', resultForm, config);
-
             if (data.data.url || data) {
                 return res.end(
                     JSON.stringify(

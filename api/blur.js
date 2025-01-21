@@ -1,9 +1,9 @@
 const sharp = require('sharp');
 const axios = require('axios');
 const FormData = require('form-data');
-
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer();
+
 const singleUpload = (req, res) => {
     return new Promise((resolve, reject) => {
         upload.single('image')(req, res, (err) => {
