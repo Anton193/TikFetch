@@ -2,7 +2,8 @@ const remobg = require('remove.bg');
 const axios = require('axios');
 const FormData = require('form-data');
 const multer = require('multer');
-const upload = multer();
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const singleUpload = (req, res) => {
     return new Promise((resolve, reject) => {
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
         return res.end(`
             <html>
                 <body>
-                    <h1>Remove Background</h1>
+                    <h1>Upload Gambar untuk Proses Background Removal</h1>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <input type="file" name="image" accept="image/*" required />
                         <button type="submit">Upload</button>
@@ -75,7 +76,7 @@ module.exports = async (req, res) => {
                 },
             };
             const { data } = await axios.post('https://cloudmage.biz.id/upload.php', form, config);
-            if (data) {
+            if (data && data.data && data.data.url) {
                 return res.end(
                     JSON.stringify(
                         {
@@ -85,6 +86,8 @@ module.exports = async (req, res) => {
                         }, null, 2
                     )
                 );
+            } else {
+                throw new Error('Gagal mengupload gambar');
             }
         } catch (error) {
             return res.end(
