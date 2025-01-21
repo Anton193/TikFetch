@@ -1,8 +1,8 @@
 const axios = require('axios');
 const FormData = require('form-data');
-const fs = require("fs");
+const fs = require('fs');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer(); // tidak perlu menyimpan file lokal
 
 const singleUpload = (req, res) => {
     return new Promise((resolve, reject) => {
@@ -39,10 +39,16 @@ module.exports = async (req, res) => {
                     }, null, 2)
                 );
             }
-            const image = fs.readFileSync(file.path);
+
+            // Kirim file sebagai stream menggunakan FormData
             const formData = new FormData();
             formData.append("model_version", "1");
-            formData.append("image", image, "anton.jpg");
+            formData.append("image", file.buffer, {
+                filename: 'anton.jpg',
+                contentType: 'image/jpeg',
+            });
+
+            // POST ke API
             const response = await axios.post(
                 `https://inferenceengine.vyro.ai/enhance`,
                 formData,
@@ -56,14 +62,16 @@ module.exports = async (req, res) => {
                     responseType: 'arraybuffer',
                 }
             );
-            const form = new FormData();
-            form.append('image', response.data, {
+
+            // Kirimkan hasil ke server lain (Cloudmage)
+            const resultForm = new FormData();
+            resultForm.append('image', response.data, {
                 filename: 'output-image.png',
                 contentType: 'image/png',
             });
             const config = {
                 headers: {
-                    ...form.getHeaders(),
+                    ...resultForm.getHeaders(),
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
                     'Accept': 'application/json, text/plain, */*',
                     'Accept-Encoding': 'gzip, deflate, br',
@@ -73,7 +81,8 @@ module.exports = async (req, res) => {
                     'Authorization': `Bearer d1eb3fb2a9a0fb6b34356f5fa1f40`,
                 },
             };
-            const { data } = await axios.post('https://cloudmage.biz.id/upload.php', form, config);
+            const { data } = await axios.post('https://cloudmage.biz.id/upload.php', resultForm, config);
+
             if (data.data.url || data) {
                 return res.end(
                     JSON.stringify(
