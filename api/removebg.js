@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
                 'dWbCoCb3TacCP93imNEcPxcL'
             ];
             const { base64img } = await remobg.removeBackgroundFromImageFile({
-                path: file.buffer,
+                path: file.path,
                 apiKey: apirnobg[Math.floor(Math.random() * apirnobg.length)],
                 size: 'auto',
                 type: 'auto',
