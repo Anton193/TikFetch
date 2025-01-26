@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         return res.end(`
             <html>
                 <body>
-                    <h1>Upload Gambar untuk Proses Background Removal</h1>
+                    <h1>Remove Background</h1>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <input type="file" name="image" accept="image/*" required />
                         <button type="submit">Upload</button>
@@ -42,14 +42,13 @@ module.exports = async (req, res) => {
             }
             const base64Image = file.buffer.toString('base64');
             let apirnobg = [
-                'q61faXzzR5zNU6cvcrwtUkRU',
-                'S258diZhcuFJooAtHTaPEn4T',
-                '5LjfCVAp4vVNYiTjq9mXJWHF',
-                'aT7ibfUsGSwFyjaPZ9eoJc61',
-                'BY63t7Vx2tS68YZFY6AJ4HHF',
-                '5Gdq1sSWSeyZzPMHqz7ENfi8',
-                'xp8pSDavAgfE5XScqXo9UKHF',
-                'dWbCoCb3TacCP93imNEcPxcL'
+                "vKaV85HViT5KNnfUyQY3QrjB",
+                "QsCQPUi5LP5VJobEJgs27dCD",
+                "X7uzNoJVA4cF266R2H5PXgge",
+                "fnnPSvFp5w3qw7X8ynnDKbNh",
+                "q8qb66SARtnCk65J3NCFR19e",
+                "f7uxsHRixvoDjXSPWdF8997W",
+                "nscJVLkMfbzxViqfhRomnpgq"
             ];
             const { base64img } = await remobg.removeBackgroundFromImageBase64({
                 base64img: base64Image,
